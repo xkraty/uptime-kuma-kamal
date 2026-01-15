@@ -1,0 +1,8 @@
+servers:
+  web:
+    - uptime.yourdomain.com
+
+proxy:
+  hosts: 
+    - uptime.yourdomain.com
+    - status.yourdomain.com

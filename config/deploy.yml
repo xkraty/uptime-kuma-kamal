@@ -1,0 +1,48 @@
+service: uptime-kuma
+
+image: <username>/uptime-kuma
+
+servers:
+  web: 
+
+proxy: 
+  ssl: true
+  app_port: 3001
+
+registry:
+  server: ghcr.io
+  username:
+    - KAMAL_REGISTRY_USERNAME
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+env:
+  clear:
+    UPTIME_KUMA_DB_TYPE: mariadb
+    UPTIME_KUMA_DB_HOSTNAME: uptime-kuma-db
+  secret:
+    - UPTIME_KUMA_DB_NAME
+    - UPTIME_KUMA_DB_USERNAME
+    - UPTIME_KUMA_DB_PASSWORD
+
+builder:
+  arch: amd64
+
+volumes:
+  - /data/uptime-kuma:/app/data
+
+accessories:
+  db:
+    image: mariadb:12
+    role: web
+    port: 3306
+    env:
+      clear:
+        MARIADB_RANDOM_ROOT_PASSWORD: 1
+      secret:
+        - MARIADB_DATABASE
+        - MARIADB_USER
+        - MARIADB_PASSWORD
+    volumes:
+      - data:/var/lib/mysql
+
