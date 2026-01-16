@@ -7,8 +7,9 @@ permissions:
 on:
   release:
     types: [published]
-  schedule:
-    - cron: "0 7 * * *"
+  # Uncomment to enable daily automatic deployments (runs at 7:00 AM UTC)
+  # schedule:
+  #   - cron: "0 7 * * *"
   workflow_dispatch:
     inputs:
       environment:
